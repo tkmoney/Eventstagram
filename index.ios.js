@@ -9,9 +9,6 @@ var React = require('react-native');
 const Routes = require('./Routes');
 var styles = require('./styles.js');
 
-console.log('after require index', Routes, styles);
-
-
 var {
   AppRegistry,
   NavigatorIOS
@@ -26,7 +23,6 @@ class Eventstagram extends React.Component {
   }
 
   render() {
-    console.log('ROUTES', Routes);
     return (
       <NavigatorIOS
         style={styles.navigator}

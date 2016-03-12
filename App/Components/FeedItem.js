@@ -50,9 +50,15 @@ class FeedItem extends React.Component {
         return Math.floor(seconds) + "s";
     }
 
+    componentDidMount(){
+      console.log('feed item mount')
+    }
+
+    componentWillUnmount(){
+      console.log('feed item unmount')
+    }
 
     render(){
-      console.log('render feed item', this.props.item);
       return (
         <View style={{flex:1}}>
           <View style={{flex:1, padding: 5, flexDirection: 'row', alignItems:'stretch'}}>
