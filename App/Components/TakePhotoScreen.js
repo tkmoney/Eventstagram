@@ -1,6 +1,7 @@
 var React = require('react-native');
 import Camera from 'react-native-camera';
 var styles = require('../../styles.js');
+var Routes = require('../../Routes.js');
 
 var {
    View,
@@ -13,10 +14,7 @@ class TakePhotoScreen extends React.Component {
     takePicture() {
       this.camera.capture()
         .then((data) => {
-          console.log(data);
-          var r = this.props.routes.photoReview;
-          r.passProps.photoData = data;
-          this.props.navigator.push(r);
+          this.props.navigator.push(Routes.getPhotoReviewRoute(data));
         })
         .catch(err => console.error(err));
     }

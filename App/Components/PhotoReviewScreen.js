@@ -20,7 +20,7 @@ class PhotoReviewScreen extends React.Component {
 
     constructor(props){
       super(props);
-      this.itemsRef = new Firebase("https://eventstagram.firebaseio.com/items");
+      this.itemsRef = this.props.firebaseItemsRef;
 
       this.state = {
         modalVisible: false,
@@ -47,7 +47,6 @@ class PhotoReviewScreen extends React.Component {
     }
 
     onTextInputFocus(e){
-      this.refs.scrollView.scrollEnabled = true;
       this.inputFocused('captionTextInput');
     }
 
@@ -70,7 +69,7 @@ class PhotoReviewScreen extends React.Component {
 
     onSharePress(){
       this.setState({modalVisible: true});
-      image_uploader(this.props.photoData, this.onUploadComplete.bind(this));
+      image_uploader(this.props.photoURL, this.onUploadComplete.bind(this));
     }
 
     onUploadComplete(err, response){
@@ -105,7 +104,7 @@ class PhotoReviewScreen extends React.Component {
         <ScrollView ref="scrollView">
           <View style={{height: (windowSize.height - 65)}}>
             <View style={{flex: 3, padding: 10}}>
-              <Image style={{resizeMode: 'contain', flex: 1}} source={{uri: this.props.photoData}} />
+              <Image style={{resizeMode: 'contain', flex: 1}} source={{uri: this.props.photoURL}} />
             </View>
             <View style={{flex: 1}}>
               <View style={{flex:1.5, padding: 10}}>

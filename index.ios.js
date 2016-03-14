@@ -1,13 +1,11 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- */
 'use strict';
 
 var React = require('react-native');
+import ExNavigator from '@exponent/react-native-navigator';
 
-const Routes = require('./Routes');
+const Routes = require('./Routes.js');
 var styles = require('./styles.js');
+console.log('Routes from index', Routes);
 
 var {
   AppRegistry,
@@ -24,10 +22,14 @@ class Eventstagram extends React.Component {
 
   render() {
     return (
-      <NavigatorIOS
+      <ExNavigator
         style={styles.navigator}
-        initialRoute={Routes.main} />
-      
+        navigationBarStyle={{backgroundColor: '#2A5C7E'}}
+        titleStyle={{color: '#ffffff'}}
+        barButtonTextStyle={{color: '#ffffff'}}
+        barButtonIconStyle={{tintColor: '#ffffff'}}
+        sceneStyle={{paddingTop: 64}}
+        initialRoute={Routes.getFeedRoute()} />
     );
   }
 }

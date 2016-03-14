@@ -1,39 +1,66 @@
-var FeedScreen = require('./App/Components/FeedScreen');
-var TakePhotoScreen = require('./App/Components/TakePhotoScreen');
-var PhotoReviewScreen = require('./App/Components/PhotoReviewScreen');
-var CommitAndUploadScreen = require('./App/Components/CommitAndUpload');
+var React = require('react-native');
+const Firebase = require('firebase');
+const firebaseItemsRef = new Firebase("https://eventstagram.firebaseio.com/items");
 
 var Routes = {
-  main: {
-    title: 'Photo Feed',
-    barTintColor:'#2A5C7E',
-    titleTextColor:'#ffffff',
-    tintColor:'#fff',
-    component: FeedScreen
+  getFeedRoute(){
+    return {
+      renderScene(navigator){
+        var FeedScreen = require('./App/Components/FeedScreen');
+        return (<FeedScreen navigator={navigator} firebaseItemsRef={firebaseItemsRef} />);
+      },
+      onDidFocus(ev){
+        console.log('did focus!', ev);
+      },
+      getTitle(){
+        return 'Photos'
+      }
+    }
   },
-  takePhoto: {
-    title: 'Photo',
-    barTintColor:'#333333',
-    titleTextColor:'#ffffff',
-    tintColor:'#fff',
-    component: TakePhotoScreen
+  getCommentsRoute(key){
+    return {
+      renderScene(navigator){
+        var Comments = require('./App/Components/Comments');
+        var item = firebaseItemsRef.child(key);
+        return (<Comments navigator={navigator} firebaseFeedItem={item} />);
+      },
+      onDidFocus(ev){
+        console.log('did focus!', ev);
+      },
+      getTitle(){
+        return 'Comments'
+      }
+    }
   },
-  photoReview: {
-    title: 'Write a Caption',
-    barTintColor:'#333333',
-    titleTextColor:'#ffffff',
-    tintColor:'#fff',
-    component: PhotoReviewScreen
+  getPhotoRoute(){
+    console.log('getPhotoRoute!!')
+    return {
+      renderScene(navigator){
+        var TakePhotoScreen = require('./App/Components/TakePhotoScreen');
+        return (<TakePhotoScreen navigator={navigator} />);
+      },
+      onDidFocus(ev){
+        console.log('did focus!', ev);
+      },
+      getTitle(){
+        return 'Photo'
+      }
+    }
   },
-  commitAndUpload: {
-    title: 'uploading...',
-    barTintColor:'#333333',
-    titleTextColor:'#ffffff',
-    tintColor:'#fff',
-    component: CommitAndUploadScreen
+  getPhotoReviewRoute(photoURL){
+    return {
+      renderScene(navigator){
+        var PhotoReviewScreen = require('./App/Components/PhotoReviewScreen');
+        return (<PhotoReviewScreen navigator={navigator} firebaseItemsRef={firebaseItemsRef} photoURL={photoURL} />);
+      },
+      onDidFocus(ev){
+        console.log('PhotoReviewScreen did focus!', ev);
+      },
+      getTitle(){
+        return 'Review'
+      }
+    }
   }
 };
-for (key in Routes) {
-  Routes[key].passProps = {routes: Routes};
-}
+
 module.exports = Routes;

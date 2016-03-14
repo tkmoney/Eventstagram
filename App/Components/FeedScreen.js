@@ -3,26 +3,27 @@
 var React = require('react-native');
 const Firebase = require('firebase');
 var styles = require('../../styles.js');
-import { Mixin } from 'Subscribable';
+var Routes = require('../../Routes');
+
+console.log('Routes from feedScreen', Routes);
+
+
 var PhotoButtonBar = require('./PhotoButtonBar');
 var FeedItem = require('./FeedItem');
-
 
 var {
    View,
    Text,
-   ListView,
-   AlertIOS
+   ListView
 } = React;
 
-@Mixin
 class FeedScreen extends React.Component {
 
   constructor(props) {
     super(props);
-    this.itemsRef = new Firebase("https://eventstagram.firebaseio.com/items");
+    console.log('this.props', this.props);
+    this.itemsRef = this.props.firebaseItemsRef;
     this.state = {
-      isRefreshing: false,
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1._key !== row2._key,
       })
@@ -54,28 +55,28 @@ class FeedScreen extends React.Component {
 
   componentDidMount() {
     this.listenForItems(this.itemsRef);
-    console.log('this.refs.listview', this.refs.listview);
-    console.log('this.props.navigator: ', this.props.navigator);
-    //this.addListenerOn(this.props.navigator.navigationContext,'didfocus',(e)=>{console.log(e, 'navigationContext')});
     this.refs.listview.scrollTo({y: 0});
   }
 
   componentWillUnmount(){
-    console.log("componentWillUnmount")
+    console.log("componentWillUnmount");
     this.itemsRef.off('value', this.onFirebaseValueChange);
   }
 
 
   onPhotoButtonClick(){
-    //AlertIOS.alert('add new item', null, [{text:'Add', onPress: this.onAlertAddItemPress.bind(this)}],'plain-text');
-    this.props.navigator.push(this.props.routes.takePhoto);
+    console.log('onPhotoButtonClick!', Routes);
+    this.props.navigator.push(Routes.getPhotoRoute());
   }
 
+  renderItem(itm){
+    return (<FeedItem item={itm} {...this.props} />);
+  }
 
    render(){
       return (
          <View style={styles.navigatorChildScreen}>
-            <ListView ref="listview" dataSource={this.state.dataSource} renderRow={(itm)=>{return (<FeedItem item={itm} />)}} style={{flex:1}} />
+            <ListView ref="listview" dataSource={this.state.dataSource} renderRow={this.renderItem.bind(this)} style={{flex:1}} />
             <PhotoButtonBar onPhotoButtonClick={this.onPhotoButtonClick.bind(this)} />
          </View>
       )
