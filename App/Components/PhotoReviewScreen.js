@@ -20,7 +20,7 @@ class PhotoReviewScreen extends React.Component {
 
     constructor(props){
       super(props);
-      this.itemsRef = this.props.firebaseItemsRef;
+      this.itemsRef = this.props.firebasePhotosRef;
 
       this.state = {
         modalVisible: false,

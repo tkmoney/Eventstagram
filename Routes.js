@@ -1,7 +1,7 @@
 var React = require('react-native');
 const Globals = require('./lib/Globals');
 const Firebase = require('firebase');
-const firebaseItemsRef = new Firebase(`${Globals.FIREBASE_ROOT}/items`);
+const firebasePhotosRef = new Firebase(`${Globals.FIREBASE_ROOT}/items`);
 
 var Routes = {
   getLoginRoute(){
@@ -21,7 +21,7 @@ var Routes = {
     return {
       renderScene(navigator){
         var FeedScreen = require('./App/Components/FeedScreen');
-        return (<FeedScreen navigator={navigator} firebaseItemsRef={firebaseItemsRef} />);
+        return (<FeedScreen navigator={navigator} firebasePhotosRef={firebasePhotosRef} />);
       },
       onDidFocus(ev){
       },
@@ -34,7 +34,7 @@ var Routes = {
     return {
       renderScene(navigator){
         var Comments = require('./App/Components/Comments');
-        var item = firebaseItemsRef.child(key);
+        var item = firebasePhotosRef.child(key);
         return (<Comments navigator={navigator} firebaseFeedItem={item} />);
       },
       onDidFocus(ev){
@@ -62,7 +62,7 @@ var Routes = {
     return {
       renderScene(navigator){
         var PhotoReviewScreen = require('./App/Components/PhotoReviewScreen');
-        return (<PhotoReviewScreen navigator={navigator} firebaseItemsRef={firebaseItemsRef} photoURL={photoURL} />);
+        return (<PhotoReviewScreen navigator={navigator} firebasePhotosRef={firebasePhotosRef} photoURL={photoURL} />);
       },
       onDidFocus(ev){
       },
