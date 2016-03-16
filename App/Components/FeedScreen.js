@@ -5,9 +5,6 @@ const Firebase = require('firebase');
 var styles = require('../../styles.js');
 var Routes = require('../../Routes');
 
-console.log('Routes from feedScreen', Routes);
-
-
 var PhotoButtonBar = require('./PhotoButtonBar');
 var FeedItem = require('./FeedItem');
 
@@ -21,17 +18,22 @@ class FeedScreen extends React.Component {
 
   constructor(props) {
     super(props);
-    console.log('this.props', this.props);
     this.itemsRef = this.props.firebaseItemsRef;
     this.state = {
       dataSource: new ListView.DataSource({
-        rowHasChanged: (row1, row2) => row1._key !== row2._key,
+        rowHasChanged: (row1, row2) => {
+          var keydiff = (row1._key !== row2._key);
+          var cmtdiff = (row1.comments !== row2.comments);
+          var likesdiff = (row1.likes !== row2.likes);
+          return (keydiff || cmtdiff || likesdiff);
+        },
       })
     }
   }
 
   onFirebaseValueChange(snap){
     // get children as an array
+    console.log('onFirebaseValueChange!', snap);
     var items = [];
     snap.forEach((child) => {
       items.push({
@@ -60,7 +62,7 @@ class FeedScreen extends React.Component {
 
   componentWillUnmount(){
     console.log("componentWillUnmount");
-    this.itemsRef.off('value', this.onFirebaseValueChange);
+    this.itemsRef.off();
   }
 
 

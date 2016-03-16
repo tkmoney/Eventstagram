@@ -11,7 +11,6 @@ var {
 
 class Comment extends React.Component {
   render(){
-    console.log('this.props', this.props);
     return (
       <View style={{flex: 1, flexDirection:'row', marginLeft: 5, marginTop: 5, marginRight: 5}}>
         <View style={{flex:1, flexDirection:'row', backgroundColor: 'blue'}}>

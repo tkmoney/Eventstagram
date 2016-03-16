@@ -3,7 +3,7 @@ var styles = require('../../styles.js');
 var Util = require('../../lib/util.js');
 var FeedItemActions = require('./FeedItemActions');
 var LikeCount = require('./LikeCount');
-var Comments = require('./Comments');
+var CommentsPreview = require('./CommentsPreview');
 
 var {
    View,
@@ -18,7 +18,6 @@ class FeedItem extends React.Component {
       this.state = {
         displayTime: "0s"
       }
-      //this.updateDisplayInterval();
       this.interval = null;
     }
 
@@ -65,10 +64,6 @@ class FeedItem extends React.Component {
     }
 
     render(){
-      /*
-            <Comments comments={this.props.item.comments} />
-      */
-
       return (
         <View style={{flex:1}}>
           <View style={{flex:1, padding: 5, flexDirection: 'row', alignItems:'stretch'}}>
@@ -83,6 +78,7 @@ class FeedItem extends React.Component {
           <View style={{paddingLeft:10, paddingRight: 10, paddingTop: 10, paddingBottom: 10}}>
             <FeedItemActions {...this.props} />
             <LikeCount likes={this.props.item.likes} />
+            <CommentsPreview {...this.props} comments={this.props.item.comments} />
           </View>
         </View>
       )

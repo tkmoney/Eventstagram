@@ -4,8 +4,8 @@ var React = require('react-native');
 import ExNavigator from '@exponent/react-native-navigator';
 
 const Routes = require('./Routes.js');
+
 var styles = require('./styles.js');
-console.log('Routes from index', Routes);
 
 var {
   AppRegistry,
@@ -13,14 +13,22 @@ var {
 } = React;
 
 
-
 class Eventstagram extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      isLoggedIn: false
+    }
   }
 
   render() {
+
+    var r = Routes.getLoginRoute;
+    if(!this.state.isLoggedIn){
+      r = Routes.getFeedRoute;
+    }
+
     return (
       <ExNavigator
         style={styles.navigator}
@@ -29,7 +37,7 @@ class Eventstagram extends React.Component {
         barButtonTextStyle={{color: '#ffffff'}}
         barButtonIconStyle={{tintColor: '#ffffff'}}
         sceneStyle={{paddingTop: 64}}
-        initialRoute={Routes.getFeedRoute()} />
+        initialRoute={r()} />
     );
   }
 }

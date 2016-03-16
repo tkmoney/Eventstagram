@@ -1,8 +1,22 @@
 var React = require('react-native');
+const Globals = require('./lib/Globals');
 const Firebase = require('firebase');
-const firebaseItemsRef = new Firebase("https://eventstagram.firebaseio.com/items");
+const firebaseItemsRef = new Firebase(`${Globals.FIREBASE_ROOT}/items`);
 
 var Routes = {
+  getLoginRoute(){
+    return {
+      renderScene(navigator){
+        var LoginScreen = require('./App/Components/LoginScreen.js');
+        return (<LoginScreen navigator={navigator} />);
+      },
+      onDidFocus(ev){
+      },
+      getTitle(){
+        return 'Login'
+      }
+    }
+  },
   getFeedRoute(){
     return {
       renderScene(navigator){
@@ -10,7 +24,6 @@ var Routes = {
         return (<FeedScreen navigator={navigator} firebaseItemsRef={firebaseItemsRef} />);
       },
       onDidFocus(ev){
-        console.log('did focus!', ev);
       },
       getTitle(){
         return 'Photos'
@@ -25,7 +38,6 @@ var Routes = {
         return (<Comments navigator={navigator} firebaseFeedItem={item} />);
       },
       onDidFocus(ev){
-        console.log('did focus!', ev);
       },
       getTitle(){
         return 'Comments'
@@ -40,7 +52,6 @@ var Routes = {
         return (<TakePhotoScreen navigator={navigator} />);
       },
       onDidFocus(ev){
-        console.log('did focus!', ev);
       },
       getTitle(){
         return 'Photo'
@@ -54,7 +65,6 @@ var Routes = {
         return (<PhotoReviewScreen navigator={navigator} firebaseItemsRef={firebaseItemsRef} photoURL={photoURL} />);
       },
       onDidFocus(ev){
-        console.log('PhotoReviewScreen did focus!', ev);
       },
       getTitle(){
         return 'Review'

@@ -26,6 +26,7 @@ class Comments extends React.Component {
     this.firebaseComments = this.firebaseFeedItem.child('comments');
     this.state = {
       commentInputText: "",
+      textInputIsFocused: false,
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
@@ -82,6 +83,7 @@ class Comments extends React.Component {
   }
 
   onCommentSendPress(){
+    if(this.state.commentInputText === ""){return};
     var new_item = this.firebaseComments.push();
     new_item.setWithPriority({
       username: "TEST AUTHOR",
@@ -98,16 +100,25 @@ class Comments extends React.Component {
     this.setState({commentInputText: ev.nativeEvent.text});
   }
 
+
   render(){
+    var inputStyle = {height: 50, flex: 1, justifyContent:'center', alignItems: 'center', backgroundColor: '#ffffff', margin: 5, padding: 5, borderColor:'#333', borderWidth: 1, borderRadius: 3}
+
+    var sendButtonInputStyle = {flex: 1, backgroundColor:'#2A5C7E', alignItems: 'center', borderRadius: 5, margin: 5};
+
+    if(this.state.commentInputText === ""){
+      sendButtonInputStyle.opacity = 0.5;
+    }
+
     return (
       <View style={{height: (this.state.visibleHeight - 64)}}>
         <ListView ref="listview" dataSource={this.state.dataSource} renderRow={this.renderComment.bind(this)} style={{flex:5}} />
         <View style={{height: 45, backgroundColor: '#c0c0c0'}}>
           <View style={{flex:1, flexDirection:'row'}}>
             <View style={{flex:3, justifyContent:'center'}}>
-              <TextInput value={this.state.commentInputText} onChange={this.onInputChange.bind(this)} placeholder="add a comment..." ref="commentTextInput" style={{height: 30, fontSize: 20,backgroundColor: '#ffffff', margin: 5, paddingBottom: 5, paddingLeft: 5, paddingRight: 5, borderColor:'#333', borderWidth:1, borderRadius:3}} />
+              <TextInput multiline={false} textAlignVertical="top" value={this.state.commentInputText} onChange={this.onInputChange.bind(this)} placeholder="add a comment..." ref="commentTextInput" style={inputStyle} />
             </View>
-            <TouchableHighlight onPress={this.onCommentSendPress.bind(this)} style={{flex: 1, backgroundColor:'#2A5C7E', alignItems: 'center', borderRadius: 5, margin: 5}}>
+            <TouchableHighlight onPress={this.onCommentSendPress.bind(this)} style={sendButtonInputStyle}>
               <View style={{flex:1, alignItems: 'center', justifyContent: 'center'}}>
                 <Text style={{color:'#ffffff'}}>SEND</Text>
               </View>

@@ -13,17 +13,15 @@ class FeedItemActions extends React.Component {
 
   constructor(props){
     super(props);
-    console.log('props ', this.props);
   }
 
   onCommentPress(){
-    console.log('onCommentPress');
     this.props.navigator.push(Routes.getCommentsRoute(this.props.item._key));
   }
 
   render(){
     return (
-      <View style={{flex:1, borderColor:'#c0c0c0', borderBottomWidth: 1}}>
+      <View style={{flex:1, flexDirection:'row', alignItems:'flex-start', borderColor:'#c0c0c0', borderBottomWidth: 1}}>
         <TouchableHighlight>
           <Text>Like!</Text>
         </TouchableHighlight>
