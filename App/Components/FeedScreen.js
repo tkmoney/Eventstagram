@@ -29,8 +29,6 @@ class FeedScreen extends React.Component {
   }
 
   onFirebaseValueChange(snap){
-    // get children as an array
-    console.log('onFirebaseValueChange!', snap);
     var items = [];
     snap.forEach((child) => {
       items.push({
@@ -49,7 +47,7 @@ class FeedScreen extends React.Component {
   }
 
   listenForItems(itemsRef) {
-    itemsRef.orderByPriority().on('value', this.onFirebaseValueChange.bind(this));
+    itemsRef.orderByChild("timestamp").on('value', this.onFirebaseValueChange.bind(this));
   }
 
   componentDidMount() {
@@ -58,13 +56,11 @@ class FeedScreen extends React.Component {
   }
 
   componentWillUnmount(){
-    console.log("componentWillUnmount");
     this.itemsRef.off();
   }
 
 
   onPhotoButtonClick(){
-    console.log('onPhotoButtonClick!', Routes);
     this.props.navigator.push(Routes.getPhotoRoute());
   }
 

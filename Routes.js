@@ -1,7 +1,6 @@
 var React = require('react-native');
-const Globals = require('./lib/Globals');
-const Firebase = require('firebase');
-const firebasePhotosRef = new Firebase(`${Globals.FIREBASE_ROOT}/items`);
+const FirebaseService = require('./lib/firebase_service.js');
+const firebasePhotosRef = FirebaseService.photosRef;
 
 var Routes = {
   getLoginRoute(){
@@ -45,7 +44,6 @@ var Routes = {
     }
   },
   getPhotoRoute(){
-    console.log('getPhotoRoute!!')
     return {
       renderScene(navigator){
         var TakePhotoScreen = require('./App/Components/TakePhotoScreen');

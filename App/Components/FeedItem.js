@@ -15,6 +15,8 @@ class FeedItem extends React.Component {
 
     constructor(props){
       super(props);
+      this.commentsID = this.props.item.comments;
+      this.userID = this.props.item.userID;
       this.state = {
         displayTime: "0s"
       }
@@ -78,7 +80,7 @@ class FeedItem extends React.Component {
           <View style={{paddingLeft:10, paddingRight: 10, paddingTop: 10, paddingBottom: 10}}>
             <FeedItemActions {...this.props} />
             <LikeCount likes={this.props.item.likes} />
-            <CommentsPreview {...this.props} comments={this.props.item.comments} />
+            <CommentsPreview {...this.props} commentsRecordId={this.props.item.comments} />
           </View>
         </View>
       )

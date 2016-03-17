@@ -4,6 +4,7 @@ var React = require('react-native');
 import ExNavigator from '@exponent/react-native-navigator';
 
 const Routes = require('./Routes.js');
+var CurrentUser = require('./lib/CurrentUser');
 
 var styles = require('./styles.js');
 
@@ -23,10 +24,10 @@ class Eventstagram extends React.Component {
   }
 
   render() {
+    var r = Routes.getFeedRoute;
 
-    var r = Routes.getLoginRoute;
-    if(!this.state.isLoggedIn){
-      r = Routes.getFeedRoute;
+    if(!CurrentUser.id){
+      r = Routes.getLoginRoute;
     }
 
     return (

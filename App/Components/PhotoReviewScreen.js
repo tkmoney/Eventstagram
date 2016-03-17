@@ -1,5 +1,6 @@
 var React = require('react-native');
 const Firebase = require('firebase');
+const FirebaseService = require('../../lib/firebase_service.js');
 var image_uploader = require('../../lib/image_uploader.js');
 var Dimensions = require('Dimensions');
 var windowSize = Dimensions.get('window');
@@ -85,18 +86,11 @@ class PhotoReviewScreen extends React.Component {
 
         console.log(json);
         
-        var new_item = this.itemsRef.push();
-        new_item.setWithPriority({
-          image: "http://res.cloudinary.com/dnhb1uskb/image/upload/c_limit,h_400,q_jpegmini:1,w_320/#.^".replace('#', json.public_id).replace('^',json.format),
-          author: "TEST AUTHOR",
-          timestamp: Firebase.ServerValue.TIMESTAMP,
-          comments: [],
-          likes: []
-        }, Firebase.ServerValue.TIMESTAMP, () => {
+        //TODO: add real user_id
+        FirebaseService.addPhoto({public_id: json.public_id, format: json.format}).then(()=>{
           this.setState({modalVisible: false, modalIsAnimated: false});
           this.props.navigator.popToTop();
         });
-
     }
 
     render(){
