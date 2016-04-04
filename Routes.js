@@ -1,6 +1,14 @@
 var React = require('react-native');
 const FirebaseService = require('./lib/firebase_service.js');
+const LocalUserData = require('./lib/LocalUserData.js');
+
 const firebasePhotosRef = FirebaseService.photosRef;
+
+var {
+   View,
+   Text,
+   TouchableHighlight
+} = React;
 
 var Routes = {
   getLoginRoute(){
@@ -26,6 +34,20 @@ var Routes = {
       },
       getTitle(){
         return 'Photos'
+      },
+      renderRightButton(navigator){
+        let onpress = () => {
+          LocalUserData.showLogoutActionSheet().then(() => {
+            navigator.replace(Routes.getLoginRoute());
+          }).catch((err)=>{console.log(err)});
+        }
+        return (
+          <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', padding: 10}}>
+            <TouchableHighlight onPress={onpress}>
+              <Text style={{color:'#fff', fontSize: 13}}>LOGOUT</Text>
+            </TouchableHighlight>
+          </View>
+        );
       }
     }
   },

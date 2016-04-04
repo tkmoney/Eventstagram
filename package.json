@@ -7,11 +7,13 @@
   },
   "dependencies": {
     "@exponent/react-native-navigator": "^0.4.2",
-    "firebase": "^2.4.1",
+    "firebase": "^2.4.2",
     "lodash": "latest",
-    "react-native": "^0.20.0",
+    "react": "^0.14.5",
+    "react-native": "^0.23.0-rc4",
     "react-native-camera": "git+https://github.com/lwansbrough/react-native-camera.git",
     "react-native-facebook-login": "^1.0.3",
+    "react-native-keyboard-aware-scroll-view": "0.0.5",
     "react-native-uploader": "0.0.9"
   }
 }

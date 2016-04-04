@@ -24,12 +24,6 @@ class Eventstagram extends React.Component {
   }
 
   render() {
-    var r = Routes.getFeedRoute;
-
-    if(!CurrentUser.id){
-      r = Routes.getLoginRoute;
-    }
-
     return (
       <ExNavigator
         style={styles.navigator}
@@ -38,7 +32,7 @@ class Eventstagram extends React.Component {
         barButtonTextStyle={{color: '#ffffff'}}
         barButtonIconStyle={{tintColor: '#ffffff'}}
         sceneStyle={{paddingTop: 64}}
-        initialRoute={r()} />
+        initialRoute={Routes.getLoginRoute()} />
     );
   }
 }
